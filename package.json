@@ -1,0 +1,29 @@
+{
+  "name": "dianping-crawlers",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SilverMonk/dianping-crawlers.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SilverMonk/dianping-crawlers/issues"
+  },
+  "homepage": "https://github.com/SilverMonk/dianping-crawlers#readme",
+  "dependencies": {
+    "async": "^2.1.5",
+    "cheerio": "^0.22.0",
+    "co": "^4.6.0",
+    "mysql": "^2.13.0",
+    "mysql2": "^1.2.0",
+    "request": "^2.79.0",
+    "superagent": "^3.4.4"
+  }
+}
