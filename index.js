@@ -49,7 +49,6 @@ co(function*() {
             //批量入库
         } catch (err) {}
     }
-    console.info(`全部爬取完毕`);
     console.info('DATA', { memberQrueue, shopQrueue, spideQrueue });
     console.info(`全部爬取完毕`);
 });
