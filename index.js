@@ -30,7 +30,7 @@ co(function*() {
             var task = spideQrueue.next();
             console.info('进行作业', task.url);
             var $ = yield htmlworker.do(task);
-            var data = yield reviewsworker.do($, {pathname: 'http://www.dianping.com/member/43014967/reviews'});
+            var data = yield reviewsworker.do($, { pathname: task.url });
             //缓存队列
             if (memberQrueue.qIndex[data.member.dpid] == null) {
                 memberQrueue.add(data.member);
@@ -47,13 +47,13 @@ co(function*() {
             }
 
             //批量入库
-        } catch(err) {}
+        } catch (err) {}
     }
     console.info(`全部爬取完毕`);
-    console.info('DATA',{member:memberQrueue.queue});
+    console.info('DATA', { member: memberQrueue.queue });
 });
 // 错误处理
-process.on('unhandledRejection', function (err) {
+process.on('unhandledRejection', function(err) {
     console.error(err.stack);
 });
 
