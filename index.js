@@ -50,7 +50,7 @@ co(function*() {
         } catch (err) {}
     }
     console.info(`全部爬取完毕`);
-    console.info('DATA', { member: memberQrueue.queue });
+    console.info('DATA', { memberQrueue, shopQrueue, spideQrueue });
 });
 // 错误处理
 process.on('unhandledRejection', function(err) {
