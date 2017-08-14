@@ -1,36 +1,33 @@
-// var dbdata = require('./db/api');
+var url = require('url');
 var co = require('co');
 var TaskQueue = require('./scripts/taskqueue');
 var works = require('./scripts/worker');
-// var cfg = {};
-//control
-// var initData = dbdata.getInitData();
-// const getTest =co.wrap(function*(){
-//     return Promise.resolve({test:1});
-// })
-// co(function*(){
-//    var ts=yield getTest();
-//    console.log(ts.test);
-// });
+
 var spideQrueue = new TaskQueue('url');
 var memberQrueue = new TaskQueue('dpid');
 var shopQrueue = new TaskQueue('url');
 
 var htmlworker = new works.HtmlWorker();
 var reviewsworker = new works.ReviewsWorker();
+
 spideQrueue.add({
     dpid: 43014967,
     url: 'http://www.dianping.com/member/43014967/reviews'
 });
-
-co(function*() {
+spideQrueue.add({
+    dpid: 43014967,
+    url: 'https://www.dianping.com/member/2516395/reviews'
+});
+co(function* () {
     console.info('-----系统启动-----');
     while (spideQrueue.queue.length > 0) {
         try {
             var task = spideQrueue.next();
             console.info('进行作业', task.url);
+            var urlobj = url.parse(task.url);
+
             var $ = yield htmlworker.do(task);
-            var data = yield reviewsworker.do($, { pathname: task.url });
+            var data = yield reviewsworker.do($, { url: 'http://' + urlobj.host + urlobj.pathname });
             //缓存队列
             if (memberQrueue.qIndex[data.member.dpid] == null) {
                 memberQrueue.add(data.member);
@@ -47,14 +44,16 @@ co(function*() {
             }
 
             //批量入库
-        } catch (err) {}
+            
+        } catch (err) { }
     }
-    console.info('DATA', { memberQrueue, shopQrueue, spideQrueue });
+    console.info('DATA', { member:memberQrueue.queue, shop:shopQrueue.queue });
     console.info(`全部爬取完毕`);
 });
+
+
 // 错误处理
-process.on('unhandledRejection', function(err) {
+process.on('unhandledRejection', function (err) {
     console.error(err.stack);
 });
-
 process.on(`uncaughtException`, console.error);

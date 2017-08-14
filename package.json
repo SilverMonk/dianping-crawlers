@@ -18,12 +18,10 @@
   },
   "homepage": "https://github.com/SilverMonk/dianping-crawlers#readme",
   "dependencies": {
-    "async": "^2.1.5",
     "cheerio": "^0.22.0",
     "co": "^4.6.0",
-    "mysql": "^2.13.0",
     "mysql2": "^1.2.0",
-    "request": "^2.79.0",
+    "sequelize": "^4.4.7",
     "superagent": "^3.4.4"
   }
 }

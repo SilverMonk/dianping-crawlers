@@ -19,7 +19,7 @@ function ReviewsWorker(name) {
     BaseWorker.call(this, name);
     this.type = 'reviews';
     this.do = co.wrap(function*($, opts) {
-        var pathname = opts.pathname || '';
+        var pathname = opts.url || '';
         var member = {
             name: $('.head-user .name').text(),
             dpid: $('.head-user .pic a').attr('href').replace('/member/', ''),
