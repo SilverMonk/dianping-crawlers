@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 
-var sequelize = new Sequelize('dianping', 'root', '', {
+const sequelize = new Sequelize('dianping', 'root', '', {
     host: 'localhost',
     dialect: 'mysql',
     pool: {
@@ -9,49 +9,30 @@ var sequelize = new Sequelize('dianping', 'root', '', {
         idle: 10000
     },
 });
-var TestTask = sequelize.define('testtask', {
+const Member = sequelize.define('member', {
     id: {
-        type: Sequelize.STRING(50),
+        type: Sequelize.UUID,
         primaryKey: true
     },
     name: Sequelize.STRING(100),
-    gender: Sequelize.BOOLEAN,
+    dpid: Sequelize.STRING(100),
+    pic: Sequelize.STRING(255),
     createdAt: Sequelize.DATE,
-    updatedAt: Sequelize.BIGINT,
+    updatedAt: Sequelize.DATE,
 }, {});
-//TestTask.sync({force: true});
-(async() => {
-    var now = Date.now();
-    var dog = await TestTask.create({
-        id: 'd-' + now,
-        name: 'Odie',
-        gender: false,
-        createdAt: now,
-        updatedAt: now,
-    });
-    console.log('created: ' + JSON.stringify(dog));
-})();
-// 　　
-// var mysql = require('mysql2');　
-// var env = {
-//     host: 'localhost',
-//     user: 'root',
-//     password: '',
-//     database: 'dianping'　　　　　　
-// };
-// // var env = {
-// //     host: '120.77.200.91',
-// //     user: 'root',
-// //     password: 'change4db',
-// //     database: 'dianping'　　　　　　
-// // };
-// var pool = mysql.createPool(env);
+const Shop = sequelize.define('shop', {
+    id: {
+        type: Sequelize.UUID ,
+        primaryKey: true
+    },
+    name: Sequelize.STRING(100),
+    url: Sequelize.STRING(255),
+    createdAt: Sequelize.DATE,
+    updatedAt: Sequelize.DATE,
+}, {});
 
-// exports.do = function(sql, params, callback) {
-//     this.getConnection(function(err, connection) {
-//         connection.query(sql, params, function() {
-//             callback.apply(connection, arguments);
-//             connection.release();
-//         });
-//     })
-// }.bind(pool);
+module.exports = {
+    sequelize,
+    Member,
+    Shop
+};

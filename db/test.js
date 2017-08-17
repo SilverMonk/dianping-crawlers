@@ -1,35 +1,25 @@
-const Sequelize = require('sequelize');
+// var api = require('./api');
 
-var sequelize = new Sequelize('dianping', 'root', '', {
-    host: 'localhost',
-    dialect: 'mysql',
-    pool: {
-        max: 5,
-        min: 0,
-        idle: 10000
-    },
-});
-var TestTask = sequelize.define('testtask', {
-    id: {
-        type: Sequelize.STRING(50),
-        primaryKey: true
-    },
-    name: Sequelize.STRING(100),
-    gender: Sequelize.BOOLEAN,
-    createdAt: Sequelize.DATE,
-    updatedAt: Sequelize.BIGINT,
-}, {});
-// TestTask.sync({force: true});
-(async() => {
-    var now = Date.now();
-    var dog = await TestTask.create({
-        id: 'd-' + now,
-        name: 'Odie',
-        gender: false,
-        createdAt: now,
-        updatedAt: now,
-    });
-    console.log('created: ' + JSON.stringify(dog));
-    process.exit();
-})();
+// (async() => {
+//     var element={
+//         name:'test',
+//         dpid:1234354,
+//         pic:'testurl'
+//     }
+//     let data = await api.creatMember(element);
 
+//     console.log('over');
+// });
+
+var BloomFilter = require('bloomfilter').BloomFilter ;
+
+var bloom = new BloomFilter(
+    32 * 256, // number of bits to allocate.
+    16 // number of hash functions.
+);
+// Add some elements to the filter.
+bloom.add("foo");
+bloom.add("bar");
+var array = [].slice.call(bloom.buckets);
+
+console.log(JSON.stringify(array));

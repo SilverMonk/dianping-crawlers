@@ -1,5 +1,8 @@
 var url = require('url');
 var co = require('co');
+
+var api = require('./db/api');
+var db = require('./db/api');
 var TaskQueue = require('./scripts/taskqueue');
 var works = require('./scripts/worker');
 
@@ -27,7 +30,9 @@ co(function* () {
             var urlobj = url.parse(task.url);
 
             var $ = yield htmlworker.do(task);
-            var data = yield reviewsworker.do($, { url: 'http://' + urlobj.host + urlobj.pathname });
+            var data = yield reviewsworker.do($, {
+                url: 'http://' + urlobj.host + urlobj.pathname
+            });
             //缓存队列
             if (memberQrueue.qIndex[data.member.dpid] == null) {
                 memberQrueue.add(data.member);
@@ -44,11 +49,24 @@ co(function* () {
             }
 
             //批量入库
-            
-        } catch (err) { }
+
+        } catch (err) {}
     }
-    console.info('DATA', { member:memberQrueue.queue, shop:shopQrueue.queue });
+    (async() => {
+        for (let element of memberQrueue.queue) {
+            await api.creatMember(element);
+        }
+        for (let element of shopQrueue.queue) {
+            await api.creatShop(element);
+        }
+    })();
+
     console.info(`全部爬取完毕`);
+    // console.info('DATA', {
+    //     member: memberQrueue.queue,
+    //     shop: shopQrueue.queue
+    // });
+
 });
 
 

@@ -16,6 +16,10 @@ asynckit@^0.4.0:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/asynckit/-/asynckit-0.4.0.tgz#c79ed97f7f34cb8f2ba1bc9790bcc366474b4b79"
 
+bloomfilter:
+  version "0.0.16"
+  resolved "https://registry.yarnpkg.com/bloomfilter/-/bloomfilter-0.0.16.tgz#42602390c7466bdd39048494782d3e1a6a0f2af3"
+
 bluebird@^3.4.6:
   version "3.5.0"
   resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.5.0.tgz#791420d7f551eea2897453a8a77653f96606d67c"
@@ -360,6 +364,10 @@ named-placeholders@1.1.1:
   resolved "https://registry.yarnpkg.com/named-placeholders/-/named-placeholders-1.1.1.tgz#3b7a0d26203dd74b3a9df4c9cfb827b2fb907e64"
   dependencies:
     lru-cache "2.5.0"
+
+node-uuid:
+  version "1.4.8"
+  resolved "https://registry.yarnpkg.com/node-uuid/-/node-uuid-1.4.8.tgz#b040eb0923968afabf8d32fb1f17f1167fdab907"
 
 nth-check@~1.0.1:
   version "1.0.1"
