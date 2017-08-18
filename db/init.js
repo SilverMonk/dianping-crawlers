@@ -13,10 +13,10 @@ async function shop_init_fun() {
 };
 
 (async() => {
-    await member_init_fun().catch(function (err) {
+    await member_init_fun().catch(function(err) {
         console.log(err);
     });;
-    await shop_init_fun().catch(function (err) {
+    await shop_init_fun().catch(function(err) {
         console.log(err);
     });
     console.log('completed');
