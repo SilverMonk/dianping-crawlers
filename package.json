@@ -21,6 +21,7 @@
     "bloomfilter": "^0.0.16",
     "cheerio": "^0.22.0",
     "co": "^4.6.0",
+    "moment": "^2.18.1",
     "mysql2": "^1.2.0",
     "node-uuid": "^1.4.8",
     "sequelize": "^4.4.7",
