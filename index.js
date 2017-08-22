@@ -20,7 +20,7 @@ const memberPix = 'https://www.dianping.com/member/';
 var seedlist = [{
     dpid: 43014967
 }, {
-    dpid: 2516395
+    dpid: 28681034
 }];
 var injectseed = false;
 var cfg = {
