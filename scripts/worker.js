@@ -1,25 +1,24 @@
 /**
  * Created by Administrator on 2017/2/25/025.
  */
-var co = require('co');
 var request = require('superagent');
 var cheerio = require('cheerio');
 
 function BaseWorker(name) {
     this.name = name || "default";
     this.type = "Base";
-    this.init = function () {
-    };
-    this.do = function (data) {
+    this.init = function() {};
+    this.do = function(data) {
         return data;
     };
-    this.commit = function () {};
+    this.commit = function() {};
 }
+
 function ReviewsWorker(name) {
     BaseWorker.call(this, name);
     this.type = 'reviews';
-    this.do = co.wrap(function*($, opts) {
-        var pathname = opts.url || '';
+    this.do = async($) => {
+        var pathname = location.host + location.pathname;
         var member = {
             name: $('.head-user .name').text(),
             dpid: $('.head-user .pic a').attr('href').replace('/member/', ''),
@@ -27,7 +26,7 @@ function ReviewsWorker(name) {
         };
 
         var shops = [];
-        $('.pic-txt ul li .J_rptlist h6 a').each(function (i, e) {
+        $('.pic-txt ul li .J_rptlist h6 a').each(function(i, e) {
             shops.push({
                 url: $(e).attr('href'),
                 name: $(e).text(),
@@ -35,26 +34,31 @@ function ReviewsWorker(name) {
         });
 
         var paging = [];
-        $('.pages-num a').each(function (i, e) {
+        $('.pages-num a').each(function(i, e) {
             paging.push({
                 url: (pathname) + $(e).attr('href'),
             });
         });
         return {
-            member, shops, paging
+            member,
+            shops,
+            paging
         };
-    });
+    };
 
 }
+
 function HtmlWorker(name) {
     BaseWorker.call(this, name);
     this.type = 'html';
-    this.do = co.wrap(function*(data) {
-        return request.get(data.url).then(function (res) {
+    this.do = async(data) => {
+        return request.get(data.url).then(function(res) {
             return cheerio.load(res.text);
         });
-    });
+    };
 }
 module.exports = {
-    BaseWorker, ReviewsWorker, HtmlWorker
+    BaseWorker,
+    ReviewsWorker,
+    HtmlWorker
 }

@@ -29,10 +29,8 @@ spideQrueue.add({
             var urlobj = url.parse(task.url);
 
             var $ = await htmlworker.do(task);
-            var data = await reviewsworker.do($, {
-                url: 'http://' + urlobj.host + urlobj.pathname
-            });
-            //缓存队列
+            var data = await reviewsworker.do($);
+            //队列
             if (memberQrueue.qIndex[data.member.dpid] == null) {
                 memberQrueue.add(data.member);
                 await api.creatMember(element);
