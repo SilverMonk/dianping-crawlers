@@ -26,10 +26,11 @@ function ReviewsWorker(name) {
         };
 
         var shops = [];
-        $('.pic-txt ul li .J_rptlist h6 a').each(function(i, e) {
+        $('.pic-txt ul li .J_rptlist').each(function(i, e) {
             shops.push({
-                url: $(e).attr('href'),
-                name: $(e).text(),
+                dpid: $(e).find('.J_report').attr('data-sid'),
+                url: $(e).find('h6 a').attr('href'),
+                name: $(e).find('h6 a').text(),
             });
         });
 
@@ -46,6 +47,27 @@ function ReviewsWorker(name) {
         };
     };
 
+}
+
+function FollowsWorker(name) {
+    BaseWorker.call(this, name);
+    this.type = 'follows';
+    this.do = async($, opts) => {
+        var follows = [];
+        $('.fllow-list .pic-txt ul li').each((i, e) => {
+            var name = $(e).find('.pic img').attr('title');
+            var dpid = $(e).find('.pic img').attr('user-id');
+            var pic = $(e).find('.pic img').attr('data-lazyload');
+            var rank = $(e).find('.user-rank-rst').attr('title');
+            follows.push({
+                name,
+                dpid,
+                pic,
+                rank
+            });
+        })
+        return follows;
+    };
 }
 
 function HtmlWorker(name) {

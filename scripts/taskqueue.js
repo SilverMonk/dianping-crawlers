@@ -1,33 +1,33 @@
-var { BloomFilter } = require('BloomFilter');
-var bloom = new BloomFilter(
-    32 * 256, // number of bits to allocate.
-    16 // number of hash functions.
-);
+var {
+    BloomFilter
+} = require('BloomFilter');
 
 function TaskQueue(key) {
     this.queue = [];
     this.key = key;
     // this.qIndex = {};
     this.bloom = new BloomFilter(32 * 256, 16);
-    this.init = function(data) {
-        this.queue.push = data;
-        data.eachFor(function(item) {
+    this.init = function (data) {
+        this.queue = data || [];
+        this.queue.forEach(function (item) {
             item[key] && this.bloom.add(item[key])
-        })
+        }.bind(this))
     };
-    this.add = function(task) {
+    this.add = function (task) {
         /// 任务类型判断 togo
-        // this.qIndex[task[idname]] = task;
-        this.queue.push(task);
+        // this.qIndex[task[idname]] = task;        
         if (!this.bloom.test(task[this.key])) {
             this.bloom.add(task[this.key]);
+            this.queue.push(task);
+            return true;
         } else {
-            console.log('[任务重复] ' + this.key + ':' + task[this.key]);
+            //console.log('[任务重复] ' + this.key + ':' + task[this.key]);
+            return false;
         }
 
     }.bind(this);
 
-    this.next = function() {
+    this.next = function () {
         var task = this.queue.shift();
         // delete this.qIndex[idname];
         return task;
